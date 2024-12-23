@@ -1,105 +1,69 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   Button,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
+  StyleSheet,
+  TextInput,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  Header,
-} from 'react-native/Libraries/NewAppScreen';
+const TextInputExample = () => {
+  const [text, onChangeText] = React.useState('username');
+  const [number, onChangeNumber] = React.useState('');
+  const [displayLoader, setDisplayLoader] = React.useState(false);
 
-// type SectionProps = PropsWithChildren<{
-//   title: string;
-// }>;
-
-// function Section({ children, title }: SectionProps): React.JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//     </View>
-//   );
-// }
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const login = () => {
+    setDisplayLoader(true);
+    setTimeout(() => {
+      Alert.alert('login success');
+      setDisplayLoader(false);
+    }, 5000);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Button
-            onPress={() => {
-              console.log('You tapped the button!');
-            }}
-            title="Login"
-          />
-        </View>
-      </ScrollView>
+
+    <SafeAreaView>
+      <View>
+        {displayLoader && (
+          <View style={styles.indicator}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          secureTextEntry={true}
+          value={number}
+          placeholder="password"
+          keyboardType="numeric"
+        />
+        <Button disabled={displayLoader === true} title="Login" onPress={login} />
+      </View>
     </SafeAreaView>
   );
-}
+};
 
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  indicator: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    height: '450%',
+  },
+});
 
-export default App;
+export default TextInputExample;
