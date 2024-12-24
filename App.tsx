@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 const TextInputExample = () => {
-  const [text, onChangeText] = React.useState('username');
+  // const [text, onChangeText] = React.useState('');
   const [number, onChangeNumber] = React.useState('');
   const [displayLoader, setDisplayLoader] = React.useState(false);
 
@@ -33,8 +33,7 @@ const TextInputExample = () => {
         )}
         <TextInput
           style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
+          placeholder="username"
         />
         <TextInput
           style={styles.input}
